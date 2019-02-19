@@ -2,6 +2,11 @@ variable "resource_group_name" { }
 variable "primary_location" { }
 variable "secondary_location" { }
 
+variable "server_name_1" { }
+variable "server_name_2" { }
+
+variable "database_name" { }
+
 variable "db_username" { }
 variable "db_password" { }
 
@@ -16,7 +21,7 @@ resource "azurerm_resource_group" "myRg" {
 
 
 resource "azurerm_sql_server" "svr1" {
-  name                         = "cdw-svrnode1-20190217"
+  name                         = "${var.server_name_1}"
   resource_group_name          = "${azurerm_resource_group.myRg.name}"
   location                     = "${var.primary_location}"
   version                      = "12.0"
@@ -25,7 +30,7 @@ resource "azurerm_sql_server" "svr1" {
 }
 
 resource "azurerm_sql_database" "db1" {
-  name                = "Demo"
+  name                = "${var.database_name}"
   resource_group_name = "${azurerm_resource_group.myRg.name}"
   location            = "${var.primary_location}"
   server_name         = "${azurerm_sql_server.svr1.name}"
@@ -54,7 +59,7 @@ resource "azurerm_sql_firewall_rule" "fwrule1" {
 
 
 resource "azurerm_sql_server" "svr2" {
-  name                         = "cdw-svrnode2-20190217"
+  name                         = "${var.server_name_2}"
   resource_group_name          = "${azurerm_resource_group.myRg.name}"
   location                     = "${var.secondary_location}"
   version                      = "12.0"
@@ -63,7 +68,7 @@ resource "azurerm_sql_server" "svr2" {
 }
 
 resource "azurerm_sql_database" "db2" {
-  name                = "Demo"
+  name                = "${var.database_name}"
   resource_group_name = "${azurerm_resource_group.myRg.name}"
   location            = "${var.secondary_location}"
   server_name         = "${azurerm_sql_server.svr2.name}"
