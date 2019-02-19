@@ -9,6 +9,11 @@ resource_group_Name = "my-datasync-20190220"
 primary_location    = "westus2"
 secondary_location  = "westcentralus"
 
+server_name_1 = "my-svrnode1-20190220"
+server_name_2 = "my-svrnode2-20190220"
+
+database_name = "MyData"
+
 db_username   = "sqlsa"
 db_password   = "something"
 
