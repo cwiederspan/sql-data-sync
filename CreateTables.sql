@@ -1,0 +1,28 @@
+--DROP TABLE [dbo].[Users]
+CREATE TABLE [dbo].[Users]
+(
+    [Id] UNIQUEIDENTIFIER NOT NULL DEFAULT(NEWID()) PRIMARY KEY, -- Primary Key column
+    [FirstName] NVARCHAR(50) NOT NULL,
+    [LastName] NVARCHAR(50) NOT NULL,
+    [Timestamp] NVARCHAR(50) NOT NULL DEFAULT(GETUTCDATE())
+)
+
+--DROP TABLE [dbo].[Scans_WithGuid]
+CREATE TABLE [dbo].[Scans_WithGuid]
+(
+    [Id] UNIQUEIDENTIFIER NOT NULL DEFAULT(NEWID()) PRIMARY KEY,
+    [UserId] UNIQUEIDENTIFIER NOT NULL,
+    [Location] NVARCHAR(50) NOT NULL,
+    [Source] NVARCHAR(50) NOT NULL,
+    [Timestamp] NVARCHAR(50) NOT NULL DEFAULT(GETUTCDATE())
+)
+
+--DROP TABLE [dbo].[Scans_WithInt]
+CREATE TABLE [dbo].[Scans_WithInt]
+(
+    [Id] INT IDENTITY(1,1) PRIMARY KEY,
+    [UserId] UNIQUEIDENTIFIER NOT NULL,
+    [Location] NVARCHAR(50) NOT NULL,
+    [Source] NVARCHAR(50) NOT NULL,
+    [Timestamp] NVARCHAR(50) NOT NULL DEFAULT(GETUTCDATE())
+)
