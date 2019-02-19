@@ -5,6 +5,10 @@
 Create a secret.tfvars file.
 
 ```terraform
+resource_group_Name = "my-datasync-20190220"
+primary_location    = "westus2"
+secondary_location  = "westcentralus"
+
 db_username   = "sqlsa"
 db_password   = "something"
 

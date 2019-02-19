@@ -1,19 +1,24 @@
+variable "resource_group_name" { }
+variable "primary_location" { }
+variable "secondary_location" { }
+
 variable "db_username" { }
 variable "db_password" { }
+
 variable "blob_uri" { }
 variable "blob_password" { }
 
 
 resource "azurerm_resource_group" "myRg" {
-  name     = "cdw-dbdemo-20190217"
-  location = "West US"
+  name     = "${var.resource_group_name}"
+  location = "${var.primary_location}"
 }
 
 
 resource "azurerm_sql_server" "svr1" {
   name                         = "cdw-svrnode1-20190217"
   resource_group_name          = "${azurerm_resource_group.myRg.name}"
-  location                     = "westus2"
+  location                     = "${var.primary_location}"
   version                      = "12.0"
   administrator_login          = "${var.db_username}"
   administrator_login_password = "${var.db_password}"
@@ -22,7 +27,7 @@ resource "azurerm_sql_server" "svr1" {
 resource "azurerm_sql_database" "db1" {
   name                = "Demo"
   resource_group_name = "${azurerm_resource_group.myRg.name}"
-  location            = "westus2"
+  location            = "${var.primary_location}"
   server_name         = "${azurerm_sql_server.svr1.name}"
   edition                          = "Standard"
   requested_service_objective_name = "S0"
@@ -51,7 +56,7 @@ resource "azurerm_sql_firewall_rule" "fwrule1" {
 resource "azurerm_sql_server" "svr2" {
   name                         = "cdw-svrnode2-20190217"
   resource_group_name          = "${azurerm_resource_group.myRg.name}"
-  location                     = "westcentralus"
+  location                     = "${var.secondary_location}"
   version                      = "12.0"
   administrator_login          = "${var.db_username}"
   administrator_login_password = "${var.db_password}"
@@ -60,7 +65,7 @@ resource "azurerm_sql_server" "svr2" {
 resource "azurerm_sql_database" "db2" {
   name                = "Demo"
   resource_group_name = "${azurerm_resource_group.myRg.name}"
-  location            = "westcentralus"
+  location            = "${var.secondary_location}"
   server_name         = "${azurerm_sql_server.svr2.name}"
   edition                          = "Standard"
   requested_service_objective_name = "S0"
