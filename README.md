@@ -1,2 +1,24 @@
-# dbdemo-terraform
-A terraform-based demo for creating a SQL environment
+# SQL Data Sync Overview
+
+## Create Databases
+
+Create a secret.tfvars file.
+
+```terraform
+db_username   = "sqlsa"
+db_password   = "something"
+
+blob_uri      = "https://cdwms.blob.core.windows.net/deployment/data-sync-demo-source.bacpac"
+blob_password = "biglongkeygoeshere"
+```
+
+Use Terraform to create the database and import a .bacpac file to see the schema and data.
+
+```bash
+terraform init
+terraform plan -var-file=secret.tfvars
+terraform apply -var-file=secret.tfvars
+```
+
+## Setup Data Sync
+
